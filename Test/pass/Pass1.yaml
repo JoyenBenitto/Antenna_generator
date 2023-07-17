@@ -1,0 +1,9 @@
+
+---
+Project Name: "Project 2"
+MSP:
+  substrate: "FR4_epoxy"
+  unit: "mm"
+  height: 2
+  length: 3
+  width: 4

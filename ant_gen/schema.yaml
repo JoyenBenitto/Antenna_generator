@@ -1,0 +1,14 @@
+MSP:
+  allowed: ['MSP']
+  required: true
+
+  unit: "mm"
+    type: string
+    allowed: ['mm','cm','m']
+    default: 'mm'
+  height: 2
+    allowed: float
+  length: 3
+    allowed: float
+  width: 4
+    allowed: float
