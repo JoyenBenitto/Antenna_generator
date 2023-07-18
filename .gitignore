@@ -1,3 +1,6 @@
 /build
-/__pycache__/
 /ant_gen.egg-info
+/backup
+/ant_gen/tempCodeRunnerFile.py
+*.pyc
+*.pyo
