@@ -4,3 +4,9 @@
 /ant_gen/tempCodeRunnerFile.py
 *.pyc
 *.pyo
+*.swp
+*.log
+.python-version
+__pycache__/
+ant_gen/__pycache__/
+.mypy_cache/

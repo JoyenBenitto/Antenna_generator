@@ -36,7 +36,5 @@ oEditor.CreateBox(
 		"UseMaterialAppearance:=", False,
 		"IsLightweight:="	, False
 	])
-
-# oProject.Save()
 '''
 
