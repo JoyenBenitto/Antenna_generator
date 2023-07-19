@@ -16,11 +16,11 @@ def generator(build_dir):
     ground_offset_x = data['ant']['substrate']['offset'][0]
     ground_offset_y = data['ant']['substrate']['offset'][1]
     ground_offset_z = data['ant']['substrate']['offset'][2]
-    material =data['ant']['substrate']['Material']
+    material_substrate =data['ant']['substrate']['Material']
 
     with open(f"{build_dir}/generated.py","w") as fp:
         # Creating the groud  plane and the substrate
-        fp.write(temp.template_msp.format(
+        fp.write(temp.template_sub_and_gnd .format(
             project = project_name, 
             time = ti,
             month = "Jul",
@@ -33,5 +33,7 @@ def generator(build_dir):
             ground_plane_X_size = ground_plane_X_size,
             ground_plane_Y_size = ground_plane_Y_size,
             ground_plane_Z_size = ground_plane_Z_size,
-            material = material
+            material = material_substrate
+
+        # Creating the patch 
         ))

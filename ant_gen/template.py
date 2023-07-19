@@ -1,6 +1,7 @@
-template_msp = '''   
+template_sub_and_gnd = '''   
 # ----------------------------------------------
-# Script Recorded by Ansys Electronics Desktop Student Version 2022.2.0
+# Author : Joyen Benitto
+# Email : joyen.benitto12@gmail.com
 # {time}  {month} {day}, {year}
 # ----------------------------------------------
 import ScriptEnv
@@ -9,6 +10,34 @@ oDesktop.RestoreWindow()
 oProject = oDesktop.SetActiveProject("{project}")
 oDesign = oProject.SetActiveDesign("HFSSDesign1")
 oEditor = oDesign.SetActiveEditor("3D Modeler")
+oEditor.CreateRectangle(
+	[
+		"NAME:RectangleParameters",
+		"IsCovered:="		, True,
+		"XStart:="		, "{ground_plane_X_pos}{unit}",
+		"YStart:="		, "{ground_plane_Y_pos}{unit}",
+		"ZStart:="		, "{ground_plane_Z_pos}{unit}",
+		"Width:="		, "{ground_plane_X_size}{unit}",
+		"Height:="		, "{ground_plane_Y_size}{unit}",
+		"WhichAxis:="		, "Z"
+	], 
+	[
+		"NAME:Attributes",
+		"Name:="		, "ground",
+		"Flags:="		, "",
+		"Color:="		, "(128 64 64)",
+		"Transparency:="	, 0,
+		"PartCoordinateSystem:=", "Global",
+		"UDMId:="		, "",
+		"MaterialValue:="	, "\\"vacuum\\"",
+		"SurfaceMaterialValue:=", "\\"\\"",
+		"SolveInside:="		, True,
+		"ShellElement:="	, False,
+		"ShellElementThickness:=", "0mm",
+		"IsMaterialEditable:="	, True,
+		"UseMaterialAppearance:=", False,
+		"IsLightweight:="	, False
+	])
 oEditor.CreateBox(
 	[
 		"NAME:BoxParameters",
@@ -38,3 +67,33 @@ oEditor.CreateBox(
 	])
 '''
 
+template_patch = '''
+oEditor.CreateRectangle(
+	[
+		"NAME:RectangleParameters",
+		"IsCovered:="		, True,
+		"XStart:="		, "{ground_plane_X_pos}{unit}",
+		"YStart:="		, "{ground_plane_Y_pos}{unit}",
+		"ZStart:="		, "{ground_plane_Z_pos}{unit}",
+		"Width:="		, "{ground_plane_X_size}{unit}",
+		"Height:="		, "{ground_plane_Y_size}{unit}",
+		"WhichAxis:="		, "Z"
+	], 
+	[
+		"NAME:Attributes",
+		"Name:="		, "{patch_name}",
+		"Flags:="		, "",
+		"Color:="		, "(128 64 64)",
+		"Transparency:="	, 0,
+		"PartCoordinateSystem:=", "Global",
+		"UDMId:="		, "",
+		"MaterialValue:="	, "\\"vacuum\\"",
+		"SurfaceMaterialValue:=", "\\"\\"",
+		"SolveInside:="		, True,
+		"ShellElement:="	, False,
+		"ShellElementThickness:=", "0mm",
+		"IsMaterialEditable:="	, True,
+		"UseMaterialAppearance:=", False,
+		"IsLightweight:="	, False
+	])
+'''
