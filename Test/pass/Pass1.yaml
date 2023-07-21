@@ -12,5 +12,7 @@ ant:
     patch1:
       Dimensions: [0.5, 0.5]  
       offset: [0, 0, 0]
-      Feed_length: 0.5
       
+  Feed:
+    feed_length: 0.5
+    feed_to_patch: "patch1"

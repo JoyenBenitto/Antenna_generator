@@ -156,4 +156,17 @@ oEditor.CreateRectangle(
 		"UseMaterialAppearance:=", False,
 		"IsLightweight:="	, False
 	])
+    
+'''
+
+template_unite = '''
+oEditor.Unite(
+	[
+		"NAME:Selections",
+		"Selections:="		, "{unite1_name},{unite2_name}"
+	], 
+	[
+		"NAME:UniteParameters",
+		"KeepOriginals:="	, False
+	])
 '''

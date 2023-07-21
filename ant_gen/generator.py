@@ -69,3 +69,9 @@ def generator(build_dir):
             feed_box_height = feed_width,
             unit = unit
             ))
+        
+        # Uniting the Feed to the patch
+        fp.write(temp.template_unite.format(
+            unite1_name = "patch1",
+            unite2_name="feed"
+        ))
