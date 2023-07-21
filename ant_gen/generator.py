@@ -65,7 +65,7 @@ def generator(build_dir):
             feed_box_X_pos = -feed_width/2,
             feed_box_Y_pos = -ground_plane_Y_size/2,
             feed_box_Z_pos = 0,
-            feed_box_width = feed_width,
-            feed_box_height = ground_plane_Z_size,
+            feed_box_width = ground_plane_Z_size,
+            feed_box_height = feed_width,
             unit = unit
             ))
