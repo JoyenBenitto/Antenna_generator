@@ -71,7 +71,8 @@ def generator(build_dir):
             ))
         
         # Uniting the Feed to the patch
+        feed_to_patch = data['ant']['Feed']['feed_to_patch']
         fp.write(temp.template_unite.format(
-            unite1_name = "patch1",
+            unite1_name = feed_to_patch,
             unite2_name="feed"
         ))
