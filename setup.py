@@ -22,7 +22,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='ant_gen',
-    version='0.0.1',
+    version='0.0.3',
     description="SOC Generator",
     long_description= readme + '\n\n',
     classifiers=[
