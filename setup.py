@@ -39,7 +39,7 @@ setup(
     install_requires = ["requests"],
     python_requires = ">=3.8",
     entry_points={
-        'console_scripts': ['antenna_generator=antenna_generator.main:cli'],
+        'console_scripts': ['ant_gen=ant_gen.main:cli'],
     },
     include_package_data=True,
     tests_require=[],
