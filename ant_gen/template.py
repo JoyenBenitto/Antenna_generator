@@ -213,3 +213,7 @@ oEditor.Subtract(
 		"KeepOriginals:="	, False
 	])
 '''
+
+template_bound ='''
+oModule = oDesign.GetModule("BoundarySetup")
+'''

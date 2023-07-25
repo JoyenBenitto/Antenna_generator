@@ -14,9 +14,9 @@ ant:
       offset: [0, 0, 0]
       optimizations:
         cutout:
-          width: 0.2
-          height: 0.4
+          width: 0.1
+          height: 0.1
       
   Feed:
-    feed_length: 0.5
+    feed_width: 0.1
     feed_to_patch: "patch1"

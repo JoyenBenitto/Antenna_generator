@@ -35,7 +35,7 @@ def generate(ant, build_dir):
     if ant == "msp":
         utils.clean_dir(build_dir)
         os.system(f"mkdir {build_dir}")
-        gen.generator(build_dir) 
+        gen.generator_msp(build_dir) 
     else:
         utils.clean_dir(build_dir)
         print("Provide a valid antenna !")

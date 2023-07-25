@@ -1,10 +1,10 @@
 import ant_gen.template as temp
 import yaml
 import time
-from __init__ import __author__, __mail__
+from ant_gen.__init__ import __author__, __mail__
 
 
-def generator(build_dir):
+def generator_msp(build_dir):
     ti = time.ctime()
     data = []
     with open('test/pass/pass1.yaml') as f:
@@ -52,13 +52,13 @@ def generator(build_dir):
             ))
             
         # Creating a feed
-        feed_width = 0.1
-        feed_h = 0.5
+        feed_width = data['ant']['Feed']['feed_width']
+     
         fp.write(temp.template_feed.format(
             feed_X_pos = -feed_width/2,
             feed_Y_pos = -ground_plane_Y_size/2,
             feed_Z_pos =  ground_plane_Z_size,
-            feed_size = feed_h,
+            feed_size = patch_Y_size/2,
             feed_width = feed_width,
             feed_box_size = ground_plane_Z_size,
             feed_name = "feed",
@@ -79,19 +79,18 @@ def generator(build_dir):
 
         # Optimizations
         # CUTOUT
-        
-        
-        cutout_width = 0.1
-        cutout_height = 0.3
+        for patch in data['ant']['Patch']:
+            cutout_height = data['ant']['Patch'][patch]['optimizations']['cutout']['width']
+            cutout_width = data['ant']['Patch'][patch]['optimizations']['cutout']['height']
         fp.write(temp.template_rectangle.format(
-            rect_X_pos = -feed_width/2,
-            rect_Y_pos = -patch_Y_size/2,
-            rect_Z_pos = ground_plane_Z_size,
-            rect_width = -cutout_width,
-            rect_size = cutout_height,
-            name = "cutout1",
-            unit = unit
-        ))
+                rect_X_pos = -feed_width/2,
+                rect_Y_pos = -patch_Y_size/2,
+                rect_Z_pos = ground_plane_Z_size,
+                rect_width = -cutout_width,
+                rect_size = cutout_height,
+                name = "cutout1",
+                unit = unit
+            ))
         fp.write(temp.template_rectangle.format(
             rect_X_pos = feed_width/2,
             rect_Y_pos = -patch_Y_size/2,
@@ -107,3 +106,5 @@ def generator(build_dir):
             rect1= "cutout1",
             rect2= "cutout2"
         ))
+
+          
