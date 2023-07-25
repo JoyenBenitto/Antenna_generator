@@ -3,6 +3,9 @@
 import os
 from setuptools import setup, find_packages
 import codecs
+from ant_gen.__init__ import __version__
+from ant_gen.__init__ import __author__
+from ant_gen.__init__ import __mail__
 
 # Base directory of package
 here = os.path.abspath(os.path.dirname(__file__))
@@ -22,7 +25,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='ant_gen',
-    version='0.3.0',
+    version=__version__,
     description="SOC Generator",
     long_description= readme + '\n\n',
     classifiers=[
@@ -32,8 +35,8 @@ setup(
     ],
     keywords = "ant_gen",
     url = 'https://github.com/JoyenBenitto/Antenna_generator',
-    author = "Joyen Benitto",
-    author_email = 'joyen.benitto12@gmail.com',
+    author = __author__,
+    author_email = __mail__,
     license = "MIT License",
     packages = find_packages(),
     install_requires = ["requests"],
