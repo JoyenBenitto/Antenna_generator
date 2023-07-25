@@ -1,6 +1,7 @@
-import template as temp
+import ant_gen.template as temp
 import yaml
 import time
+
 
 def generator(build_dir):
     ti = time.ctime()
