@@ -1,8 +1,7 @@
 template_sub_and_gnd = '''   
 # ----------------------------------------------
-# Author : Joyen Benitto
-# Email : joyen.benitto12@gmail.com
-# {time}  {month} {day}, {year}
+# Author : {author}
+# Email : {email}
 # ----------------------------------------------
 import ScriptEnv
 ScriptEnv.Initialize("Ansoft.ElectronicsDesktop")

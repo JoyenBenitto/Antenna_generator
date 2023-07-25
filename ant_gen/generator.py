@@ -1,6 +1,7 @@
 import ant_gen.template as temp
 import yaml
 import time
+from __init__ import __author__, __mail__
 
 
 def generator(build_dir):
@@ -24,10 +25,8 @@ def generator(build_dir):
         # Creating the groud  plane and the substrate
         fp.write(temp.template_sub_and_gnd .format(
             project = project_name, 
-            time = ti,
-            month = "Jul",
-            day = 12,
-            year = 2023,
+            author = __author__,
+            email = __mail__,
             unit = unit,
             ground_plane_X_pos = -ground_plane_X_size/2 + ground_offset_x,
             ground_plane_Y_pos = -ground_plane_Y_size/2 + ground_offset_y,
