@@ -15,4 +15,10 @@ pip install -e .
 To display the help message, run:
 ```shell
 ant_gen --help
+ant_gen generate --help
+```
+
+To generate a microstrop patch antenna, run:
+```shell
+ant_gen generate --ant msp
 ```
