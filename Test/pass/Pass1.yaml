@@ -14,7 +14,7 @@ ant:
       offset: [0, 0, 0]
       optimizations:
         cutout:
-          with: 0.2
+          width: 0.2
           height: 0.4
       
   Feed:

@@ -77,3 +77,34 @@ def generator(build_dir):
             unite1_name = feed_to_patch,
             unite2_name="feed"
         ))
+
+        # Optimizations
+        # CUTOUT
+        
+        
+        cutout_width = 0.1
+        cutout_height = 0.3
+        fp.write(temp.template_rectangle.format(
+            rect_X_pos = -feed_width/2,
+            rect_Y_pos = -patch_Y_size/2,
+            rect_Z_pos = ground_plane_Z_size,
+            rect_width = -cutout_width,
+            rect_size = cutout_height,
+            name = "cutout1",
+            unit = unit
+        ))
+        fp.write(temp.template_rectangle.format(
+            rect_X_pos = feed_width/2,
+            rect_Y_pos = -patch_Y_size/2,
+            rect_Z_pos = ground_plane_Z_size,
+            rect_width = cutout_width,
+            rect_size = cutout_height,
+            name = "cutout2",
+            unit = unit
+        ))
+
+        fp.write(temp.template_subtract.format(
+            to_be_subtracted = "patch1",
+            rect1= "cutout1",
+            rect2= "cutout2"
+        ))
