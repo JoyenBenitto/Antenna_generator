@@ -22,11 +22,11 @@ with open("README.md", "r") as fh:
 
 setup(
     name='ant_gen',
-    version='0.0.3',
+    version='0.3.0',
     description="SOC Generator",
     long_description= readme + '\n\n',
     classifiers=[
-        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.8",
         "License :: MIT",
         "Development Status :: Beta"
     ],
@@ -37,7 +37,7 @@ setup(
     license = "MIT License",
     packages = find_packages(),
     install_requires = ["requests"],
-    python_requires = ">=3.10",
+    python_requires = ">=3.8",
     entry_points={
         'console_scripts': ['antenna_generator=antenna_generator.main:cli'],
     },
