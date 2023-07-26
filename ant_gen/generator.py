@@ -164,5 +164,4 @@ def generator_msp(build_dir):
                         rect1= "l1",
                         rect2= "l2"
                     ))
-                if optimization == 'U_slot':
-                    pass
+                    
