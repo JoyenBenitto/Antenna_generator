@@ -22,3 +22,21 @@ To generate a microstrop patch antenna, run:
 ```shell
 ant_gen generate --ant msp
 ```
+
+                           +---------------------+
+                           |                     |
+                           |                     |
+Input YAML    ------------>|   Antenna Generator +----------->  Generated .py
+                           |                     |
+                           |                     |                    |
+                           +---------------------+                    |
+                                                                      |
+                                                                      |
+                                                                      |
+                                                                      |
+                                                                      v
+                                                         +---------------------------+
+                                                         |                           |
+                                                         |       Ansys HFSS          |
+                                                         |                           |
+                                                         +---------------------------+
