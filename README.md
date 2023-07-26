@@ -30,7 +30,7 @@ ant_gen generate --build_dir [dir]
                            +---------------------+
                            |                     |
                            |                     |
-Input YAML    ------------>|   Antenna Generator +----------->  Generated .py
+Input YAML    ------------>|  Antenna Generator  +----------->  Generated .py
                            |                     |
                            |                     |                    |
                            +---------------------+                    |
