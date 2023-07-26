@@ -15,9 +15,10 @@ def cli():
 # CLI option 'log'.
 
 @click.option(
-    '--ant',
-    help='specify the antenna to be generated [msp -- Microstrip Patch]',
-    required=True
+    '--src',
+    default="test/pass/pass1.yaml",
+    help='provide the input with the parametersin standard format',
+    required=False
 )
 
 # CLI option 'output.
@@ -31,11 +32,7 @@ def cli():
     )
 # CLI function 'generate'
 @cli.command(help = "Generates ansys compatible .py file")
-def generate(ant, build_dir):
-    if ant == "msp":
-        utils.clean_dir(build_dir)
-        os.system(f"mkdir {build_dir}")
-        gen.generator_msp(build_dir) 
-    else:
-        utils.clean_dir(build_dir)
-        print("Provide a valid antenna !")
+def generate(build_dir, src):
+    utils.clean_dir(build_dir)
+    os.system(f"mkdir {build_dir}")
+    gen.generator(build_dir, src) 
