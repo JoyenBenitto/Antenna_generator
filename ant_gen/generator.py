@@ -1,14 +1,20 @@
 import ant_gen.template as temp
 import yaml
-import time
 from ant_gen.__init__ import __author__, __mail__
 
 
 def generator_msp(build_dir):
-    ti = time.ctime()
+    
     data = []
+    optimization_flags = {}
+
     with open('test/pass/pass1.yaml') as f:
         data = yaml.load(f, Loader= yaml.SafeLoader)
+    for patch in data['ant']['Patch']:
+        optimization_list = []
+        for optim in data['ant']['Patch'][patch]['optimizations']:
+            optimization_list.append(optim)
+        optimization_flags[patch] = optimization_list
 
     project_name = data['project_name']
     unit = data['unit']
@@ -78,33 +84,57 @@ def generator_msp(build_dir):
         ))
 
         # Optimizations
-        # CUTOUT
+        # check and make optimizations
+        
         for patch in data['ant']['Patch']:
-            cutout_height = data['ant']['Patch'][patch]['optimizations']['cutout']['width']
-            cutout_width = data['ant']['Patch'][patch]['optimizations']['cutout']['height']
-        fp.write(temp.template_rectangle.format(
-                rect_X_pos = -feed_width/2,
-                rect_Y_pos = -patch_Y_size/2,
-                rect_Z_pos = ground_plane_Z_size,
-                rect_width = -cutout_width,
-                rect_size = cutout_height,
-                name = "cutout1",
-                unit = unit
-            ))
-        fp.write(temp.template_rectangle.format(
-            rect_X_pos = feed_width/2,
-            rect_Y_pos = -patch_Y_size/2,
-            rect_Z_pos = ground_plane_Z_size,
-            rect_width = cutout_width,
-            rect_size = cutout_height,
-            name = "cutout2",
-            unit = unit
-        ))
+            for optimization in data['ant']['Patch'][patch]['optimizations']:
+                if optimization == 'cutout':
+                    cutout_height = data['ant']['Patch'][patch]['optimizations']['cutout']['width']
+                    cutout_width = data['ant']['Patch'][patch]['optimizations']['cutout']['height']
+                    fp.write(temp.template_rectangle.format(
+                        rect_X_pos = -feed_width/2,
+                        rect_Y_pos = -patch_Y_size/2,
+                        rect_Z_pos = ground_plane_Z_size,
+                        rect_width = -cutout_width,
+                        rect_size = cutout_height,
+                        name = "cutout1",
+                        unit = unit
+                    ))
+                    fp.write(temp.template_rectangle.format(
+                        rect_X_pos = feed_width/2,
+                        rect_Y_pos = -patch_Y_size/2,
+                        rect_Z_pos = ground_plane_Z_size,
+                        rect_width = cutout_width,
+                        rect_size = cutout_height,
+                        name = "cutout2",
+                        unit = unit
+                    ))
 
-        fp.write(temp.template_subtract.format(
-            to_be_subtracted = "patch1",
-            rect1= "cutout1",
-            rect2= "cutout2"
-        ))
-
-          
+                    fp.write(temp.template_subtract.format(
+                        to_be_subtracted = patch,
+                        rect1= "cutout1",
+                        rect2= "cutout2"
+                    ))
+                
+                if optimization == 'slot':
+                    slot_height = data['ant']['Patch'][patch]['optimizations']['slot']['width']
+                    slot_width = data['ant']['Patch'][patch]['optimizations']['slot']['height']
+                    offset_x = data['ant']['Patch'][patch]['optimizations']['slot']['offset'][0]
+                    offset_y = data['ant']['Patch'][patch]['optimizations']['slot']['offset'][1]
+                    fp.write(temp.template_rectangle.format(
+                        rect_X_pos = -slot_height/2 + offset_x,
+                        rect_Y_pos = -slot_width/2 -offset_y,
+                        rect_Z_pos = ground_plane_Z_size,
+                        rect_width = slot_width,
+                        rect_size = slot_height,
+                        name = "slot1",
+                        unit = unit
+                    ))
+                    fp.write(temp.template_subtract_single_rect.format(
+                        to_be_subtracted = patch,
+                        rect1= "slot1"
+                    ))
+                if optimization == 'L_slot':
+                    pass
+                if optimization == 'U_slot':
+                    pass

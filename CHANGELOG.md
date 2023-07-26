@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.3.2] - 2023-07-26
+### Added:
+- Added slot optimization
+
 ## [0.3.1] - 2023-07-25
 ### Added:
 - Added Cut-out optimization
@@ -7,7 +11,7 @@
 - Added click-up options
 - Added Subtract functionality
 - Added click commands
-
+---
 ## [0.3.0] - 2023-07-22
 ### Added:
 - Generates a patch

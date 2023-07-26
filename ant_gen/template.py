@@ -213,7 +213,18 @@ oEditor.Subtract(
 		"KeepOriginals:="	, False
 	])
 '''
-
+template_subtract_single_rect ='''
+oEditor.Subtract(
+	[
+		"NAME:Selections",
+		"Blank Parts:="		, "{to_be_subtracted}",
+		"Tool Parts:="		, "{rect1}"
+	], 
+	[
+		"NAME:SubtractParameters",
+		"KeepOriginals:="	, False
+	])
+'''
 template_bound ='''
 oModule = oDesign.GetModule("BoundarySetup")
 '''
