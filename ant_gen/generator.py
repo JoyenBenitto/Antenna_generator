@@ -2,13 +2,12 @@ import ant_gen.template as temp
 import yaml 
 from ant_gen.__init__ import __author__, __mail__
 
-
-def generator_msp(build_dir):
+def generator_msp(build_dir, src):
     
     data = []
     optimization_flags = {}
 
-    with open('test/pass/pass1.yaml') as f:
+    with open(f'{src}') as f:
         data = yaml.load(f, Loader= yaml.SafeLoader)
     for patch in data['ant']['Patch']:
         optimization_list = []
@@ -165,3 +164,10 @@ def generator_msp(build_dir):
                         rect2= "l2"
                     ))
                     
+def generator(build_dir, src):
+    with open(f'{src}') as f:
+        data = yaml.load(f, Loader= yaml.SafeLoader)
+    if data['antenna_type'] == "MSP":
+        generator_msp(build_dir, src)
+    else:
+        print("Enter a valid antenna type !")
