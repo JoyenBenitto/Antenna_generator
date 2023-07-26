@@ -2,6 +2,7 @@
 
 ## [0.3.2] - 2023-07-26
 ### Added:
+- Added L slot optimization
 - Added slot optimization
 
 ## [0.3.1] - 2023-07-25
