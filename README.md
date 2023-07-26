@@ -18,7 +18,7 @@ ant_gen --help
 ant_gen generate --help
 ```
 
-To generate a microstrop patch antenna, run:
+To generate an antenna, run:
 ```shell
 ant_gen generate --src [SOURCE]
 ```
