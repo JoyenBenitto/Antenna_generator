@@ -16,13 +16,10 @@ ant:
         cutout:
           width: 0.1
           height: 0.1
-        slot:
-          width: 0.1
-          height: 0.3
-          offset: [0, 0]
         L_slot:
           width: 0.1
           height: 0.1
+          offset: [0, 0]
         U_slot:
           width: 0.1
           height: 0.1

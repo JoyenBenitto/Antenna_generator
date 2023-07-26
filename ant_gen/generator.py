@@ -1,5 +1,5 @@
 import ant_gen.template as temp
-import yaml
+import yaml 
 from ant_gen.__init__ import __author__, __mail__
 
 
@@ -135,6 +135,34 @@ def generator_msp(build_dir):
                         rect1= "slot1"
                     ))
                 if optimization == 'L_slot':
-                    pass
+                    base_width = 0.1
+                    base_length = 0.5
+                    head_width = 0.5
+                    head_height = 0.2
+                    offset_x = data['ant']['Patch'][patch]['optimizations']['L_slot']['offset'][0]
+                    offset_y = data['ant']['Patch'][patch]['optimizations']['L_slot']['offset'][1]
+                    fp.write(temp.template_rectangle.format(
+                        rect_X_pos = -base_width/2 + offset_x,
+                        rect_Y_pos = -base_length/2 -offset_y,
+                        rect_Z_pos = ground_plane_Z_size,
+                        rect_width = base_width,
+                        rect_size = base_length,
+                        name = "l1",
+                        unit = unit
+                    ))
+                    fp.write(temp.template_rectangle.format(
+                        rect_X_pos = -base_width/2 + offset_x,
+                        rect_Y_pos =  base_width/2 +offset_y,
+                        rect_Z_pos = ground_plane_Z_size,
+                        rect_width = head_width,
+                        rect_size = head_height,
+                        name = "l2",
+                        unit = unit
+                    ))
+                    fp.write(temp.template_subtract.format(
+                        to_be_subtracted = patch,
+                        rect1= "l1",
+                        rect2= "l2"
+                    ))
                 if optimization == 'U_slot':
                     pass
