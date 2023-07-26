@@ -1,8 +1,7 @@
 template_sub_and_gnd = '''   
 # ----------------------------------------------
-# Author : Joyen Benitto
-# Email : joyen.benitto12@gmail.com
-# {time}  {month} {day}, {year}
+# Author : {author}
+# Email : {email}
 # ----------------------------------------------
 import ScriptEnv
 ScriptEnv.Initialize("Ansoft.ElectronicsDesktop")
@@ -169,4 +168,63 @@ oEditor.Unite(
 		"NAME:UniteParameters",
 		"KeepOriginals:="	, False
 	])
+'''
+
+template_rectangle = '''
+oEditor.CreateRectangle(
+	[
+		"NAME:RectangleParameters",
+		"IsCovered:="		, True,
+		"XStart:="		, "{rect_X_pos}{unit}",
+		"YStart:="		, "{rect_Y_pos}{unit}",
+		"ZStart:="		, "{rect_Z_pos}{unit}",
+		"Width:="		, "{rect_width}{unit}",
+		"Height:="		, "{rect_size}{unit}",
+		"WhichAxis:="		, "Z"
+	], 
+	[
+		"NAME:Attributes",
+		"Name:="		, "{name}",
+		"Flags:="		, "",
+		"Color:="		, "(128 64 64)",
+		"Transparency:="	, 0,
+		"PartCoordinateSystem:=", "Global",
+		"UDMId:="		, "",
+		"MaterialValue:="	, "\\"vacuum\\"",
+		"SurfaceMaterialValue:=", "\\"\\"",
+		"SolveInside:="		, True,
+		"ShellElement:="	, False,
+		"ShellElementThickness:=", "0mm",
+		"IsMaterialEditable:="	, True,
+		"UseMaterialAppearance:=", False,
+		"IsLightweight:="	, False
+	])    
+'''
+
+template_subtract ='''
+oEditor.Subtract(
+	[
+		"NAME:Selections",
+		"Blank Parts:="		, "{to_be_subtracted}",
+		"Tool Parts:="		, "{rect1},{rect2}"
+	], 
+	[
+		"NAME:SubtractParameters",
+		"KeepOriginals:="	, False
+	])
+'''
+template_subtract_single_rect ='''
+oEditor.Subtract(
+	[
+		"NAME:Selections",
+		"Blank Parts:="		, "{to_be_subtracted}",
+		"Tool Parts:="		, "{rect1}"
+	], 
+	[
+		"NAME:SubtractParameters",
+		"KeepOriginals:="	, False
+	])
+'''
+template_bound ='''
+oModule = oDesign.GetModule("BoundarySetup")
 '''

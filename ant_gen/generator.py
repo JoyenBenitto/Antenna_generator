@@ -1,13 +1,20 @@
 import ant_gen.template as temp
-import yaml
-import time
+import yaml 
+from ant_gen.__init__ import __author__, __mail__
 
 
-def generator(build_dir):
-    ti = time.ctime()
+def generator_msp(build_dir):
+    
     data = []
+    optimization_flags = {}
+
     with open('test/pass/pass1.yaml') as f:
         data = yaml.load(f, Loader= yaml.SafeLoader)
+    for patch in data['ant']['Patch']:
+        optimization_list = []
+        for optim in data['ant']['Patch'][patch]['optimizations']:
+            optimization_list.append(optim)
+        optimization_flags[patch] = optimization_list
 
     project_name = data['project_name']
     unit = data['unit']
@@ -24,10 +31,8 @@ def generator(build_dir):
         # Creating the groud  plane and the substrate
         fp.write(temp.template_sub_and_gnd .format(
             project = project_name, 
-            time = ti,
-            month = "Jul",
-            day = 12,
-            year = 2023,
+            author = __author__,
+            email = __mail__,
             unit = unit,
             ground_plane_X_pos = -ground_plane_X_size/2 + ground_offset_x,
             ground_plane_Y_pos = -ground_plane_Y_size/2 + ground_offset_y,
@@ -53,13 +58,13 @@ def generator(build_dir):
             ))
             
         # Creating a feed
-        feed_width = 0.1
-        feed_h = 0.5
+        feed_width = data['ant']['Feed']['feed_width']
+     
         fp.write(temp.template_feed.format(
             feed_X_pos = -feed_width/2,
             feed_Y_pos = -ground_plane_Y_size/2,
             feed_Z_pos =  ground_plane_Z_size,
-            feed_size = feed_h,
+            feed_size = patch_Y_size/2,
             feed_width = feed_width,
             feed_box_size = ground_plane_Z_size,
             feed_name = "feed",
@@ -77,3 +82,86 @@ def generator(build_dir):
             unite1_name = feed_to_patch,
             unite2_name="feed"
         ))
+
+        # Optimizations
+        # check and make optimizations
+        
+        for patch in data['ant']['Patch']:
+            for optimization in data['ant']['Patch'][patch]['optimizations']:
+                if optimization == 'cutout':
+                    cutout_height = data['ant']['Patch'][patch]['optimizations']['cutout']['width']
+                    cutout_width = data['ant']['Patch'][patch]['optimizations']['cutout']['height']
+                    fp.write(temp.template_rectangle.format(
+                        rect_X_pos = -feed_width/2,
+                        rect_Y_pos = -patch_Y_size/2,
+                        rect_Z_pos = ground_plane_Z_size,
+                        rect_width = -cutout_width,
+                        rect_size = cutout_height,
+                        name = "cutout1",
+                        unit = unit
+                    ))
+                    fp.write(temp.template_rectangle.format(
+                        rect_X_pos = feed_width/2,
+                        rect_Y_pos = -patch_Y_size/2,
+                        rect_Z_pos = ground_plane_Z_size,
+                        rect_width = cutout_width,
+                        rect_size = cutout_height,
+                        name = "cutout2",
+                        unit = unit
+                    ))
+
+                    fp.write(temp.template_subtract.format(
+                        to_be_subtracted = patch,
+                        rect1= "cutout1",
+                        rect2= "cutout2"
+                    ))
+                
+                if optimization == 'slot':
+                    slot_height = data['ant']['Patch'][patch]['optimizations']['slot']['width']
+                    slot_width = data['ant']['Patch'][patch]['optimizations']['slot']['height']
+                    offset_x = data['ant']['Patch'][patch]['optimizations']['slot']['offset'][0]
+                    offset_y = data['ant']['Patch'][patch]['optimizations']['slot']['offset'][1]
+                    fp.write(temp.template_rectangle.format(
+                        rect_X_pos = -slot_height/2 + offset_x,
+                        rect_Y_pos = -slot_width/2 -offset_y,
+                        rect_Z_pos = ground_plane_Z_size,
+                        rect_width = slot_width,
+                        rect_size = slot_height,
+                        name = "slot1",
+                        unit = unit
+                    ))
+                    fp.write(temp.template_subtract_single_rect.format(
+                        to_be_subtracted = patch,
+                        rect1= "slot1"
+                    ))
+                if optimization == 'L_slot':
+                    base_width = 0.1
+                    base_length = 0.5
+                    head_width = 0.5
+                    head_height = 0.2
+                    offset_x = data['ant']['Patch'][patch]['optimizations']['L_slot']['offset'][0]
+                    offset_y = data['ant']['Patch'][patch]['optimizations']['L_slot']['offset'][1]
+                    fp.write(temp.template_rectangle.format(
+                        rect_X_pos = -base_width/2 + offset_x,
+                        rect_Y_pos = -base_length/2 -offset_y,
+                        rect_Z_pos = ground_plane_Z_size,
+                        rect_width = base_width,
+                        rect_size = base_length,
+                        name = "l1",
+                        unit = unit
+                    ))
+                    fp.write(temp.template_rectangle.format(
+                        rect_X_pos = -base_width/2 + offset_x,
+                        rect_Y_pos =  base_width/2 +offset_y,
+                        rect_Z_pos = ground_plane_Z_size,
+                        rect_width = head_width,
+                        rect_size = head_height,
+                        name = "l2",
+                        unit = unit
+                    ))
+                    fp.write(temp.template_subtract.format(
+                        to_be_subtracted = patch,
+                        rect1= "l1",
+                        rect2= "l2"
+                    ))
+                    

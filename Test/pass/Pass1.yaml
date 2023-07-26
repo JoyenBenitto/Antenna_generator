@@ -1,22 +1,25 @@
 
 ---
-project_name: "Project2"
+project_name: "Project3"
 unit: "mm"
 antenna_type: "MSP"
 ant:
   substrate: 
     Material: "FR4_epoxy"
-    Dimensions: [1, 1, 1]
+    Dimensions: [3, 3, 2]
     offset: [0, 0, 0]
   Patch:
     patch1:
-      Dimensions: [0.5, 0.5]  
+      Dimensions: [1.197, 2.956]  
       offset: [0, 0, 0]
       optimizations:
         cutout:
-          with: 0.2
-          height: 0.4
-      
+          width: 0.1
+          height: 0.1
+        U_slot:
+          width: 0.1
+          height: 0.1
+          offset: [0, 0]
   Feed:
-    feed_length: 0.5
+    feed_width: 0.1
     feed_to_patch: "patch1"
