@@ -6,22 +6,11 @@ antenna_type: "MSP"
 ant:
   substrate: 
     Material: "FR4_epoxy"
-    Dimensions: [3, 3, 2]
+    Dimensions: [2.8, 3.23, 0.5]
     offset: [0, 0, 0]
   Patch:
     patch1:
-      Dimensions: [1.197, 2.956]  
-      offset: [0, 0, 0]
-      optimizations:
-        cutout:
-          width: 0.1
-          height: 0.1
-        U_slot:
-          width: 0.1
-          height: 0.1
-          offset: [0, 0]
-    patch2:
-      Dimensions: [1.197, 2.956]  
+      Dimensions: [1.61, 2.4]  
       offset: [0, 0, 0]
       optimizations:
         cutout:
@@ -32,5 +21,5 @@ ant:
           height: 0.1
           offset: [0, 0]
   Feed:
-    feed_width: 0.1
+    feed_width: 0.8
     feed_to_patch: "patch1"
