@@ -89,7 +89,7 @@ def generator_msp(build_dir, src):
         
         for patch in data['ant']['Patch']:
             for optimization in data['ant']['Patch'][patch]['optimizations']:
-                # Cutout
+                # Adding cutout
                 if optimization == 'cutout':
                     cutout_height = data['ant']['Patch'][patch]['optimizations']['cutout']['width']
                     cutout_width = data['ant']['Patch'][patch]['optimizations']['cutout']['height']
@@ -117,7 +117,7 @@ def generator_msp(build_dir, src):
                         rect1= "cutout1",
                         rect2= "cutout2"
                     ))
-                
+                # Adding an slot 
                 if optimization == 'slot':
                     slot_height = data['ant']['Patch'][patch]['optimizations']['slot']['width']
                     slot_width = data['ant']['Patch'][patch]['optimizations']['slot']['height']
@@ -136,6 +136,7 @@ def generator_msp(build_dir, src):
                         to_be_subtracted = patch,
                         rect1= "slot1"
                     ))
+                # Adding the L slot    
                 if optimization == 'L_slot':
                     base_width = 0.1
                     base_length = 0.5
