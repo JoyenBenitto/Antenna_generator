@@ -1,6 +1,7 @@
 import ant_gen.template as temp
 import yaml 
 from ant_gen.__init__ import __author__, __mail__
+from tabulate import tabulate
 
 def generator_msp(build_dir, src):
     '''
@@ -32,7 +33,7 @@ def generator_msp(build_dir, src):
         # Creating the groud  plane and the substrate
         fp.write(temp.template_sub_and_gnd .format(
             project = project_name, 
-            author = __author__,
+        author = __author__,
             email = __mail__,
             unit = unit,
             ground_plane_X_pos = -ground_plane_X_size/2 + ground_offset_x,
@@ -167,7 +168,47 @@ def generator_msp(build_dir, src):
                         rect1= "l1",
                         rect2= "l2"
                     ))
-                    
+
+                    # Adding U slot to the MSP
+                    if  optimization == 'U_slot':
+                        pass
+        # Adding port to the geometry
+         
+def tabulator(build_dir, src):
+    '''Returns a summary of the synthesised antenna
+    '''
+    data = []
+    optimization_flags = {}
+    table = []
+    with open(f'{src}') as f:
+        data = yaml.load(f, Loader= yaml.SafeLoader)
+    for patch in data['ant']['Patch']:
+        optimization_list = []
+        table = []
+       
+        for optim in data['ant']['Patch'][patch]['optimizations']:
+            optimization_list.append(optim)
+            if optim == 'cutout':
+                pass
+            # Adding an slot 
+            if optim == 'slot':
+                pass
+            # Adding the L slot    
+            if optim == 'L_slot':
+                pass
+            # Adding U slot to the MSP
+            if  optim == 'U_slot':
+                pass
+        table.append(["optimizations",optimization_list])
+        optimization_flags[patch] = optimization_list
+        print(tabulate(table, headers=[patch,"Desc"],tablefmt="outline"))
+        print("\n ________________________________________________\n")
+
+
+    print("Below is your tabulation history")
+
+
+
 def generator(build_dir, src):
     '''
     Generates the appropriate antenna according to the input yaml
@@ -176,5 +217,6 @@ def generator(build_dir, src):
         data = yaml.load(f, Loader= yaml.SafeLoader)
     if data['antenna_type'] == "MSP":
         generator_msp(build_dir, src)
+        tabulator(build_dir, src)
     else:
         print("Enter a valid antenna type !")
