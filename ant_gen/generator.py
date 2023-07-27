@@ -3,7 +3,9 @@ import yaml
 from ant_gen.__init__ import __author__, __mail__
 
 def generator_msp(build_dir, src):
-    
+    '''
+    Generates a microstrip patch fromt he given parameters in the yaml
+    '''
     data = []
     optimization_flags = {}
 
@@ -87,6 +89,7 @@ def generator_msp(build_dir, src):
         
         for patch in data['ant']['Patch']:
             for optimization in data['ant']['Patch'][patch]['optimizations']:
+                # Cutout
                 if optimization == 'cutout':
                     cutout_height = data['ant']['Patch'][patch]['optimizations']['cutout']['width']
                     cutout_width = data['ant']['Patch'][patch]['optimizations']['cutout']['height']
@@ -165,6 +168,9 @@ def generator_msp(build_dir, src):
                     ))
                     
 def generator(build_dir, src):
+    '''
+    Generates the appropriate antenna according to the input yaml
+    '''
     with open(f'{src}') as f:
         data = yaml.load(f, Loader= yaml.SafeLoader)
     if data['antenna_type'] == "MSP":
