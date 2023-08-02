@@ -22,6 +22,13 @@ def cli():
     required=False
 )
 
+#CLI option to print the summary table
+@click.option(
+    '--src',
+    default="test/pass/pass1.yaml",
+    help='provide the input with the parametersin standard format',
+    required=False
+)
 # CLI option 'output.
 # Expects a directory.
 @click.option(
@@ -34,7 +41,9 @@ def cli():
 # CLI function 'generate'
 @cli.command(help = "Generates ansys compatible .py file")
 def generate(build_dir, src):
-    log.info('Building the directory')
+    log.info('Clearing any the working tree')
     utils.clean_dir(build_dir)
+    log.info('Creating the build Directory')
     os.system(f"mkdir {build_dir}")
+    log.info('Generating the source file')
     gen.generator(build_dir, src) 
