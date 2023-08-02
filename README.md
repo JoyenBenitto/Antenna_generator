@@ -26,24 +26,3 @@ To generate an antenna into a build directory:
 ```shell
 ant_gen generate --build_dir [dir] 
 ```
-```
-                           +---------------------+
-                           |                     |
-                           |                     |
-Input YAML    ------------>|  Antenna Generator  +----------->  Generated .py
-                           |                     |
-                           |                     |                    |
-                           +---------------------+                    |
-                                                                      |
-                                                                      |
-                                                                      |
-                                                                      |
-                                                                      v
-                                                         +---------------------------+
-                                                         |                           |
-                                                         |       Ansys HFSS          |
-                                                         |                           |
-                                                         +---------------------------+
-```
-                                    
-                    
