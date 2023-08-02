@@ -26,7 +26,7 @@ with open("README.md", "r") as fh:
 setup(
     name='ant_gen',
     version=__version__,
-    description="SOC Generator",
+    description="Antenna Generator",
     long_description= readme + '\n\n',
     classifiers=[
         "Programming Language :: Python :: 3.8",
