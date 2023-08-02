@@ -1,54 +1,42 @@
 import logging
-from sys import stdout
-import colorlog
-import datetime
 
 class CustomFormatter(logging.Formatter):
-    """Logging colored formatter, adapted from https://stackoverflow.com/a/56944256/3638629"""
 
-    grey = '\x1b[38;21m'
-    blue = '\x1b[38;5;39m'
-    yellow = '\x1b[38;5;226m'
-    red = '\x1b[38;5;196m'
-    bold_red = '\x1b[31;1m'
-    reset = '\x1b[0m'
+    grey = "\x1b[38;20m"
+    yellow = "\x1b[33;20m"
+    red = "\x1b[31;20m"
+    bold_red = "\x1b[31;1m"
+    reset = "\x1b[0m"
+    green = "\x1b[1;32m"
+    format = "%(levelname)s| %(message)s "
 
-    def __init__(self, fmt):
-        super().__init__()
-        self.fmt = fmt
-        self.FORMATS = {
-            logging.DEBUG: self.grey + self.fmt + self.reset,
-            logging.INFO: self.blue + self.fmt + self.reset,
-            logging.WARNING: self.yellow + self.fmt + self.reset,
-            logging.ERROR: self.red + self.fmt + self.reset,
-            logging.CRITICAL: self.bold_red + self.fmt + self.reset
-        }
+    FORMATS = {
+        logging.DEBUG: grey + format + reset,
+        logging.INFO: green + format + reset,
+        logging.WARNING: yellow + format + reset,
+        logging.ERROR: red + format + reset,
+        logging.CRITICAL: bold_red + format + reset
+    }
 
     def format(self, record):
         log_fmt = self.FORMATS.get(record.levelno)
         formatter = logging.Formatter(log_fmt)
         return formatter.format(record)
-    
-    
-# Create custom logger logging all five levels
-logger = logging.getLogger(__name__)
+
+# create logger with 'spam_application'
+logger = logging.getLogger("My_app")
 logger.setLevel(logging.DEBUG)
 
-# Define format for logs
-fmt = '%(asctime)s | %(levelname)8s | %(message)s'
+# create console handler with a higher log level
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+ch.setFormatter(CustomFormatter())
 
-# Create stdout handler for logging to the console (logs all five levels)
-stdout_handler = logging.StreamHandler()
-stdout_handler.setLevel(logging.DEBUG)
-stdout_handler.setFormatter(CustomFormatter(fmt))
+logger.addHandler(ch)
 
-# Create file handler for logging to a file (logs all five levels)
-today = datetime.date.today()
-file_handler = logging.FileHandler('my_app_{}.log'.format(today.strftime('%Y_%m_%d')))
-file_handler.setLevel(logging.DEBUG)
-file_handler.setFormatter(logging.Formatter(fmt))
 
-# Add both handlers to the logger
-logger.addHandler(stdout_handler)
-logger.addHandler(file_handler)
-
+debug = lambda _:logger.debug(_)
+info = lambda _:logger.info(_)
+warning = lambda _:logger.warning(_)
+error = lambda _:logger.error(_)
+critical = lambda _:logger.critical(_)

@@ -34,7 +34,7 @@ def cli():
 # CLI function 'generate'
 @cli.command(help = "Generates ansys compatible .py file")
 def generate(build_dir, src):
-    log.logger.debug('Building the directory')
+    log.info('Building the directory')
     utils.clean_dir(build_dir)
     os.system(f"mkdir {build_dir}")
     gen.generator(build_dir, src) 
