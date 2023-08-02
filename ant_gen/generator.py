@@ -202,12 +202,7 @@ def tabulator(build_dir, src):
         table.append(["optimizations",optimization_list])
         optimization_flags[patch] = optimization_list
         print(tabulate(table, headers=[patch,"Desc"],tablefmt="outline"))
-        print("\n ________________________________________________\n")
-
-
-    print("Below is your tabulation history")
-
-
+        
 
 def generator(build_dir, src):
     '''
@@ -218,5 +213,6 @@ def generator(build_dir, src):
     if data['antenna_type'] == "MSP":
         generator_msp(build_dir, src)
         tabulator(build_dir, src)
+
     else:
         print("Enter a valid antenna type !")

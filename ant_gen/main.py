@@ -2,6 +2,7 @@ import ant_gen.generator as gen
 import ant_gen.utils as utils
 from ant_gen.__init__ import __version__
 from ant_gen.__init__ import __name__
+import ant_gen.logger as log
 import os
 import click
 
@@ -33,6 +34,7 @@ def cli():
 # CLI function 'generate'
 @cli.command(help = "Generates ansys compatible .py file")
 def generate(build_dir, src):
+    log.logger.debug('Building the directory')
     utils.clean_dir(build_dir)
     os.system(f"mkdir {build_dir}")
     gen.generator(build_dir, src) 
