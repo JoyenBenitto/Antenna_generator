@@ -1,9 +1,14 @@
 import ant_gen.template as temp
-import yaml 
+import yaml
+import ant_gen.logger as log 
 from ant_gen.__init__ import __author__, __mail__
+from tabulate import tabulate
+
 
 def generator_msp(build_dir, src):
-    
+    '''
+    Generates a microstrip patch fromt he given parameters in the yaml
+    '''
     data = []
     optimization_flags = {}
 
@@ -28,9 +33,10 @@ def generator_msp(build_dir, src):
     
     with open(f"{build_dir}/generated.py","w") as fp:
         # Creating the groud  plane and the substrate
+        log.info("generating the groundplane")
         fp.write(temp.template_sub_and_gnd .format(
             project = project_name, 
-            author = __author__,
+        author = __author__,
             email = __mail__,
             unit = unit,
             ground_plane_X_pos = -ground_plane_X_size/2 + ground_offset_x,
@@ -42,6 +48,7 @@ def generator_msp(build_dir, src):
             material = material_substrate
         ))
         # Creating the patch
+        log.info("Generating the Patch")
         patches = data['ant']['Patch']
         for patch in patches:
             patch_X_size = data['ant']['Patch'][patch]['Dimensions'][0]
@@ -57,6 +64,7 @@ def generator_msp(build_dir, src):
             ))
             
         # Creating a feed
+        log.info("Generating the Feed")
         feed_width = data['ant']['Feed']['feed_width']
      
         fp.write(temp.template_feed.format(
@@ -87,7 +95,9 @@ def generator_msp(build_dir, src):
         
         for patch in data['ant']['Patch']:
             for optimization in data['ant']['Patch'][patch]['optimizations']:
+                # Adding cutout
                 if optimization == 'cutout':
+                    log.warning("Cutout optimization detected")
                     cutout_height = data['ant']['Patch'][patch]['optimizations']['cutout']['width']
                     cutout_width = data['ant']['Patch'][patch]['optimizations']['cutout']['height']
                     fp.write(temp.template_rectangle.format(
@@ -114,8 +124,11 @@ def generator_msp(build_dir, src):
                         rect1= "cutout1",
                         rect2= "cutout2"
                     ))
-                
+
+                    log.info("added cutout optimization to the patch")
+                # Adding an slot 
                 if optimization == 'slot':
+                    log.warning("Slot optimization has been detected in the input YAML")
                     slot_height = data['ant']['Patch'][patch]['optimizations']['slot']['width']
                     slot_width = data['ant']['Patch'][patch]['optimizations']['slot']['height']
                     offset_x = data['ant']['Patch'][patch]['optimizations']['slot']['offset'][0]
@@ -133,7 +146,10 @@ def generator_msp(build_dir, src):
                         to_be_subtracted = patch,
                         rect1= "slot1"
                     ))
+                    log.info("Added the slot optimization")
+                # Adding the L slot    
                 if optimization == 'L_slot':
+                    log.warning("L slot optimization Detected")
                     base_width = 0.1
                     base_length = 0.5
                     head_width = 0.5
@@ -163,11 +179,51 @@ def generator_msp(build_dir, src):
                         rect1= "l1",
                         rect2= "l2"
                     ))
-                    
+                    log.info("Added L slot optimization")
+                # Adding U slot to the MSP
+                if  optimization == 'U_slot':
+                    pass
+        # Adding port to the geometry
+         
+def tabulator(build_dir, src):
+    '''Returns a summary of the synthesised antenna
+    '''
+    data = []
+    optimization_flags = {}
+    table = []
+    with open(f'{src}') as f:
+        data = yaml.load(f, Loader= yaml.SafeLoader)
+    for patch in data['ant']['Patch']:
+        optimization_list = []
+        table = []
+       
+        for optim in data['ant']['Patch'][patch]['optimizations']:
+            optimization_list.append(optim)
+            if optim == 'cutout':
+                pass
+            # Adding an slot 
+            if optim == 'slot':
+                pass
+            # Adding the L slot    
+            if optim == 'L_slot':
+                pass
+            # Adding U slot to the MSP
+            if  optim == 'U_slot':
+                pass
+        table.append(["optimizations",optimization_list])
+        optimization_flags[patch] = optimization_list
+        print(tabulate(table, headers=[patch,"Desc"],tablefmt="outline"))
+        
+
 def generator(build_dir, src):
+    '''
+    Generates the appropriate antenna according to the input yaml
+    '''
     with open(f'{src}') as f:
         data = yaml.load(f, Loader= yaml.SafeLoader)
     if data['antenna_type'] == "MSP":
         generator_msp(build_dir, src)
+        tabulator(build_dir, src)
+
     else:
         print("Enter a valid antenna type !")
