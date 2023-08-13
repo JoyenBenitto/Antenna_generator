@@ -29,14 +29,18 @@ def generator_msp(build_dir, src):
     ground_offset_y = data['ant']['substrate']['offset'][1]
     ground_offset_z = data['ant']['substrate']['offset'][2]
     material_substrate =data['ant']['substrate']['Material']
-    
-    
+    unit_freq = data['unit_freq']
+    freq_value = data['freq']['freq_value']
+    freq_range_start = data['freq']['freq_range_start']
+    freq_range_end = data['freq']['freq_range_end']
+    freq_range_step = data['freq']['freq_range_step']
+
     with open(f"{build_dir}/generated.py","w") as fp:
         # Creating the groud  plane and the substrate
         log.info("generating the groundplane")
         fp.write(temp.template_sub_and_gnd .format(
             project = project_name, 
-        author = __author__,
+            author = __author__,
             email = __mail__,
             unit = unit,
             ground_plane_X_pos = -ground_plane_X_size/2 + ground_offset_x,
@@ -184,7 +188,33 @@ def generator_msp(build_dir, src):
                 if  optimization == 'U_slot':
                     pass
         # Adding port to the geometry
-         
+
+        # Adding boundary setup template
+        fp.write(temp.template_bound)
+
+        # Adding analysis setup template
+        fp.write(temp.template_analysis.format(
+            freq_value=data['freq']['freq_value'],
+            unit_freq=data['unit_freq'],
+            freq_range_start=data['freq']['freq_range_start'],
+            freq_range_end=data['freq']['freq_range_end'],
+            freq_range_step=data['freq']['freq_range_step']
+        ))
+
+
+
+        # Adding report templates
+        fp.write(temp.template_report.format(
+            freq_value=data['freq']['freq_value'],
+            unit_freq=data['unit_freq']
+           
+))
+
+
+
+
+
+
 def tabulator(build_dir, src):
     '''Returns a summary of the synthesised antenna
     '''
