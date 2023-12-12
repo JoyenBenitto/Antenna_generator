@@ -1,11 +1,10 @@
-
 ---
 project_name: "Project3"
 unit: "mm"
-unit_freq: "Hz"
 antenna_type: "MSP"
+
 ant:
-  substrate: 
+  substrate:
     Material: "FR4_epoxy"
     Dimensions: [3, 3, 2]
     offset: [0, 0, 0]
@@ -17,10 +16,7 @@ ant:
         cutout:
           width: 0.1
           height: 0.1
-        U_slot:
-          width: 0.1
-          height: 0.1
-          offset: [0, 0]
+    
   Feed:
     feed_width: 0.1
     feed_to_patch: "patch1"
