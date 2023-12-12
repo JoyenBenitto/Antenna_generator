@@ -31,7 +31,7 @@ jobs:
               run: python setup.py sdist
             
             - name: Publish distribution to PyPI
-              uses: pypa/gh-action-pypi-publish@main
+              uses: pypa/gh-action-pypi-publish@v0.1.1
               with:
                 password: ${{ secrets.test_pypi_password }}
                 repository_url: https://upload.pypi.org/legacy/
