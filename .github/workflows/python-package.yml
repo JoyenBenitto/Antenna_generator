@@ -9,7 +9,7 @@ jobs:
         name: build and publish Python distribution
         runs-on: ubuntu-latest
         steps: 
-            - uses: action/checkout@main
+            - uses: action/checkout@v3
 
             - name: Initialize Python 3.9
               uses: action/setup-python@v1
