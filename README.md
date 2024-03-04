@@ -26,3 +26,7 @@ To generate an antenna into a build directory:
 ```shell
 ant_gen generate --build_dir [dir] 
 ```
+
+# Resources & Thoughts
+
+Find a tiny thought of mine regarding pyPatch here: [https://joyenbenitto.com/pyPatch](https://joyenbenitto.com/pyPatch)
