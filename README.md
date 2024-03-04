@@ -29,4 +29,5 @@ ant_gen generate --build_dir [dir]
 
 # Resources & Thoughts
 
-Find a tiny thought of mine regarding pyPatch here: [https://joyenbenitto.com/pyPatch](https://joyenbenitto.com/pyPatch)
+- Find a tiny thought of mine regarding pyPatch here: [https://joyenbenitto.com/pyPatch](https://joyenbenitto.com/pyPatch)
+- Find the pyPatch ppt in `resources\pyPatch.pptx`
