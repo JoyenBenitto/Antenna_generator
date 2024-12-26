@@ -1,6 +1,7 @@
 # Antenna Generator
 Antenna_generator is a tool developed with researchers in the field of antenna design in mind. In a nutshell antenna_generator is a python package that allows you to generate microstrip patch antenna in the HFSS software, we have added support for optimizations like cut-out, slots and L slot. 
 
+Read the paper: [here](https://ieeexplore.ieee.org/document/10463844)
 
 ## Installation
 
